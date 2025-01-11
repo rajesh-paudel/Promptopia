@@ -1,29 +1,46 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa6";
-const Container = () => {
+import { useState } from "react";
+const Container = ({ post }) => {
+  const [copied, setCopied] = useState("");
+  const handleTagClick = () => {};
+  const handleCopy = () => {
+    setCopied(post.prompt);
+    navigator.clipboard.writeText(post.prompt);
+    setTimeout(() => setCopied(""), 10000);
+  };
   return (
-    <div className=" border p-4 rounded-md  border-slate-500">
+    <div className=" border p-4 rounded-md  border-slate-500 min-w-80 flex flex-col gap-3 ">
       <div className="flex items-center justify-between">
-        <div className="flex items-center justify-center gap-1">
-          <div>{/* <Image alt="profile" src={null} /> */}</div>
-          <div className="flex flex-col items-center justify-center gap-1">
-            <p>name</p>
-            <p>gmail</p>
+        <div className="flex items-center justify-center gap-2">
+          <div>
+            {
+              <Image
+                className="rounded-full"
+                width={35}
+                height={35}
+                alt="profile"
+                src={post.creator.image}
+              />
+            }
+          </div>
+          <div className="flex flex-col  flex-start ">
+            <p>{post.creator.username}</p>
+            <p>{post.creator.email}</p>
           </div>
         </div>
-        <FaRegCopy />
+        <FaRegCopy
+          className={copied == post.prompt ? "opacity-50" : ""}
+          onClick={() => handleCopy()}
+        />
       </div>
-      <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia velit
-        dolor fugiat ut eveniet illo nihil tempora quo autem suscipit dolore
-        aspernatur, molestias magnam veritatis quos sunt! Voluptates, facere
-        deleniti.lorem Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Non, sint commodi quo dolorum officia alias. Cumque, enim magni facere
-        ipsum magnam harum eligendi reiciendis, facilis repellat quis voluptatum
-        qui repellendus?
-      </p>
-      <div></div>
+      <p>{post.prompt}</p>
+      <div className="text-blue-500">
+        <span onClick={handleTagClick}>#{post.tag}</span>
+      </div>
     </div>
   );
 };

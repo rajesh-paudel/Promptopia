@@ -4,33 +4,26 @@ import Image from "next/image";
 import React from "react";
 import Button from "./Button";
 import Link from "next/link";
-import { useSession, signIn, signOut, getProviders } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session } = useSession();
 
-  const [providers, setProviders] = useState(null);
-  useEffect(() => {
-    const setUpProviders = async () => {
-      const response = await getProviders();
-      setProviders(response);
-    };
-    setUpProviders();
-  }, []);
-
   return (
-    <nav className="flex items-center justify-between mb-20">
+    <nav className="flex items-center justify-between mb-20 text-sm sm:text-lg">
       <div className="font-bold font-xl sm:text-2xl md:text-4xl">
         Promptopia
       </div>
       {session?.user ? (
-        <div className="flex items-center gap-3 sm:gap-4 md:gap-7">
-          <Button text="create Post" dark />
+        <div className="flex items-center gap-2  md:gap-3">
+          <Link href="/create-prompt">
+            <Button text="create Post" dark />
+          </Link>
 
           <div onClick={signOut}>
             <Button text="Sign Out" light />
           </div>
-          <div>
+          <Link href="/profile">
             <Image
               src={session?.user.image}
               alt="profile"
@@ -38,10 +31,10 @@ const Navbar = () => {
               width={37}
               height={37}
             />
-          </div>
+          </Link>
         </div>
       ) : (
-        <div onClick={() => signIn(Object.values(providers).id)}>
+        <div onClick={() => signIn("google")}>
           <Button text="Sign In" dark />
         </div>
       )}
