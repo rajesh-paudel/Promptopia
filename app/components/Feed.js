@@ -22,18 +22,21 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center justify-center max-w-lg mx-auto">
-      <form onSubmit={handleSearchSubmit} className="w-full">
+    <div className="w-full  flex flex-col items-center   ">
+      <form
+        onSubmit={handleSearchSubmit}
+        className="w-full flex flex-col items-center"
+      >
         <input
           required
           placeholder="Search for a tag or a username"
           type="text"
-          className=" rounded-sm outline-none shadow-lg py-2 px-5 w-full mb-20"
+          className="w-full rounded-sm outline-none shadow-lg py-2 px-5 max-w-xl mb-20"
           value={serachText}
           onChange={(e) => setSerchText(e.target.value)}
         ></input>
       </form>
-      <div className="w-full flex justify-center items-center flex-wrap gap-5">
+      <div className="w-full flex flex-row-reverse justify-center items-center flex-wrap gap-5">
         {posts.map((post) => {
           return <Container key={post._id} post={post}></Container>;
         })}

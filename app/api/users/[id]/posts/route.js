@@ -4,7 +4,8 @@ import Prompt from "@/app/models/prompt.model";
 export const GET = async (req, { params }) => {
   await connectDB();
   try {
-    const posts = await Prompt.find({ creator: params.id }).populate("creator");
+    const { id } = await params;
+    const posts = await Prompt.find({ creator: id }).populate("creator");
     return new Response(JSON.stringify(posts), { status: 200 });
   } catch (error) {
     return new Response("cannot fetch posts", { status: 500 });

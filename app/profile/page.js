@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Profile from "../components/Profile";
 const page = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -14,9 +14,13 @@ const page = () => {
       setPosts(data);
     };
     if (session?.user.id) fetchPosts();
-  }, []);
-  console.log(posts);
-  return <Profile session={session} posts={posts}></Profile>;
+  }, [session]);
+
+  return (
+    status == "authenticated" && (
+      <Profile session={session} posts={posts} setPosts={setPosts}></Profile>
+    )
+  );
 };
 
 export default page;

@@ -10,9 +10,9 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <nav className="flex items-center justify-between mb-20 text-sm sm:text-lg">
+    <nav className="flex items-center justify-between mb-12 text-sm sm:text-lg">
       <div className="font-bold font-xl sm:text-2xl md:text-4xl">
-        Promptopia
+        <Link href="/"> Promptopia</Link>
       </div>
       {session?.user ? (
         <div className="flex items-center gap-2  md:gap-3">
